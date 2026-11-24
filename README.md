@@ -1,24 +1,35 @@
-# tiny-chess-4k
+# Tiny Chess Engine
 
-[![make.fun · tiny-chess-01](https://make.fun/badge/tiny-chess-01.svg)](https://make.fun/bounty/tiny-chess-01?utm_source=github&utm_medium=readme&utm_campaign=tiny-chess-01)
-[![rank](https://make.fun/badge/tiny-chess-01/Cenzer0/tiny-chess-4k/rank.svg)](https://make.fun/bounty/tiny-chess-01/leaderboard?utm_source=github&utm_medium=readme&utm_campaign=tiny-chess-01)
-[![reward](https://make.fun/badge/tiny-chess-01/Cenzer0/tiny-chess-4k/reward.svg)](https://make.fun/bounty/tiny-chess-01?utm_source=github&utm_medium=readme&utm_campaign=tiny-chess-01)
+A compact chess engine for the make.fun tiny-chess-01 competition,
+written from scratch in Python. It plays the house gauntlet through the
+contest environment: `POST /game` serves the game in play, `POST /move`
+plays a move, and the loop ends when the environment answers `done`.
 
-A chess engine that fits in 4 KB of Python: a negamax alpha-beta search with quiescence, a transposition table, killer moves and piece-square evaluation, driven by a fixed node budget so every move is deterministic. It plays the make.fun house gauntlet by polling the competition env and answering with its moves.
+## How it plays
 
-## Run it
+The engine uses a 0x88 board with negamax alpha-beta search, a capture
+quiescence search with check evasions, a transposition table, MVV-LVA
+plus killer and history move ordering, null-move pruning, and delta
+pruning in quiescence. It searches by iterative deepening on a fixed
+node budget (150,000 nodes a move), never by a clock, so every trial
+replays identically. The evaluation is material plus piece-square tables
+with a bishop-pair bonus and a separate king table for the endgame. It
+also refuses to repeat a position for the third time when another move
+exists. Move generation is verified against standard perft suites
+(start position, Kiwipete and the usual tactical positions).
 
-```sh
-MAKEFUN_ENV_URL=http://127.0.0.1:8080 python3 main.py
-```
+## Files
 
-`main.py` is the whole engine: it unpacks and runs the readable source it
-was packed from with the kit's `makefun compress` (that source travels with
-the entry's transcript bundle, not in this repository, so the snapshot
-stays inside the size caps). It expects the tiny-chess-01 env to be serving
-games at `MAKEFUN_ENV_URL` and plays every game of the gauntlet, one after
-another.
+- `main.py` — the whole engine, 3,904 bytes, the only file the trial
+  runs. It is the packed form of `engine_ship.py`, produced by the kit's
+  `makefun compress` command.
+- `engine_ship.py` — the readable source of `main.py`.
+- `LICENSE` — MIT.
+- `.makefun/owner.json` — the claim file naming the entrant's wallet.
 
----
+## Strength
 
-<sub>Entered on [make.fun](https://make.fun/?ref=7gqwf76w&utm_source=github&utm_medium=readme&utm_campaign=tiny-chess-01) · AI agents build software for cash rewards</sub>
+On the kit's practice trial (6 games, first 6 rungs of the gauntlet)
+it scores 3.5/6: wins against depth-2, depth-3 and depth-4, a draw
+against nodes-250k, losses against nodes-100k and nodes-500k, for a
+practice Elo of about 1,370 — above the 1,154 floor for the final.
