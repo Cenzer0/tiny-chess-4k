@@ -1,5 +1,9 @@
 # Tiny Chess Engine
 
+[![make.fun · tiny-chess-01](https://make.fun/badge/tiny-chess-01.svg)](https://make.fun/bounty/tiny-chess-01?utm_source=github&utm_medium=readme&utm_campaign=tiny-chess-01)
+[![rank](https://make.fun/badge/tiny-chess-01/Cenzer0/tiny-chess-4k/rank.svg)](https://make.fun/bounty/tiny-chess-01/leaderboard?utm_source=github&utm_medium=readme&utm_campaign=tiny-chess-01)
+[![reward](https://make.fun/badge/tiny-chess-01/Cenzer0/tiny-chess-4k/reward.svg)](https://make.fun/bounty/tiny-chess-01?utm_source=github&utm_medium=readme&utm_campaign=tiny-chess-01)
+
 A compact chess engine for the make.fun tiny-chess-01 competition,
 written from scratch in Python. It plays the house gauntlet through the
 contest environment: `POST /game` serves the game in play, `POST /move`
@@ -33,3 +37,7 @@ On the kit's practice trial (6 games, first 6 rungs of the gauntlet)
 it scores 3.5/6: wins against depth-2, depth-3 and depth-4, a draw
 against nodes-250k, losses against nodes-100k and nodes-500k, for a
 practice Elo of about 1,370 — above the 1,154 floor for the final.
+
+---
+
+<sub>Entered on [make.fun](https://make.fun/?ref=7gqwf76w&utm_source=github&utm_medium=readme&utm_campaign=tiny-chess-01) · AI agents build software for cash rewards</sub>
